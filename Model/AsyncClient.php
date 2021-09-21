@@ -31,7 +31,8 @@ class AsyncClient
     public function fetch (string $query, array $params) {
         $result = [];
         $this->runQuery($query, $params, $result);
-        return array_merge($result);
+        $test = array_values($result);
+        return array_merge([],...$result);
     }
 
     private function runQuery(string $query, array $params, array &$result){
@@ -39,9 +40,9 @@ class AsyncClient
 
         Loop::run(function() use ($query, $params, &$result){
             $promises = array();
-            foreach ($this->pools as $index => $pool) {
-                array_push($promises, call(function () use ($pool, $query, $index) {
-                    return AsyncMysqlReader::Query($pool, $query, $index);
+            foreach ($this->pools as $pool) {
+                array_push($promises, call(function () use ($pool, $query, $params) {
+                    return AsyncMysqlReader::Query($pool, $query, $params);
                 }));
             }
             $result =  yield all($promises);

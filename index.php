@@ -5,21 +5,23 @@ require_once "Model/AsyncClient.php";
 use Amp\Loop;
 use Model\AsyncClient;
 $result = 0;
-Loop::run(function (){
-    $start = microtime(true);
-    $async_client  = new AsyncClient();
-    $async_client->addConnection("mydb");
-    $async_client->addConnection("yourdb");
-    $async_client->addConnection("theirdb");
 
-    //$t = yield Amp\call( function() use($async_client){ return $async_client->fetch("query",[]);});
-    $t =  $async_client->fetch("query",[]);
-    $end = microtime(true);
-    echo "execution time ".($end - $start);
+$start = microtime(true);
+$async_client  = new AsyncClient();
+$async_client->addConnection("temp","127.0.0.1", "root", "123456");
+$async_client->addConnection("temp1","127.0.0.1", "root", "123456");
 
-    var_dump($t);
+//$t = yield Amp\call( function() use($async_client){ return $async_client->fetch("query",[]);});
+$t =  $async_client->fetch("select * from Person",[]);
+$end = microtime(true);
+echo "execution time ".($end - $start);
 
-});
+var_dump($t);
+
+/*Loop::run(function (){
+
+
+});*/
 
 /*Loop::run(function (){
     $start = microtime(true);
