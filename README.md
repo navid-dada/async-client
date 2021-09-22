@@ -3,7 +3,6 @@ This project provide a facilator class to run a query on mulitple database async
 
 ## Building Blocks
 1. **AsyncClient:**
-
 This class is responsible for run orchestrate the queries on each database and aggregate the results set to create the final result.
 
 2. **AsyncMysqlReader:**
