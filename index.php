@@ -1,6 +1,5 @@
 <?php
 require "vendor/autoload.php";
-require_once "Model/AsyncDummy.php";
 require_once "Model/AsyncClient.php";
 use Amp\Loop;
 use Model\AsyncClient;
